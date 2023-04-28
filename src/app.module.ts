@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 
 // Importamos el módulo 'ConfigModule' desde el paquete '@nestjs/config'
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
 
 // Definimos el módulo 'AppModule' utilizando el decorador 'Module'
 @Module({
@@ -16,6 +17,7 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: ['.env.development'], // Archivo de variables de entorno a cargar
       isGlobal: true, // Variables de entorno disponibles en toda la aplicación
     }),
+    UserModule,
   ],
 
   // Agregamos los controladores y proveedores a este módulo
