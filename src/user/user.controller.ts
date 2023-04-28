@@ -1,5 +1,6 @@
 import { Controller } from '@nestjs/common';
-config
+import config from 'src/config';
+
 const { apiVersion } = config;
 
 @Controller(`${apiVersion}/user`)
