@@ -31,6 +31,9 @@ dependencies:
   class-validator:
     specifier: ^0.14.0
     version: 0.14.0
+  guards:
+    specifier: link:@nestjs/core/guards
+    version: link:@nestjs/core/guards
   reflect-metadata:
     specifier: ^0.1.13
     version: 0.1.13
