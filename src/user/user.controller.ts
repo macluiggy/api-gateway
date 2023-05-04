@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -6,26 +7,23 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
-import { ClientProxySuperFlights } from 'src/common/proxy/client-proxy';
-import config from 'src/config';
-import { UserDto } from './dto/user.dto';
+import { UserMSG } from './../common/constants';
 import { Observable } from 'rxjs';
+import { UserDto } from './dto/user.dto';
+import { ClientProxySuperFlights } from './../common/proxy/client-proxy';
 import { IUser } from 'src/common/interfaces/user.interface';
-import { UserMSG } from 'src/common/constants';
-import { ApiTags } from '@nestjs/swagger';
-
-const { apiVersion } = config;
 
 @ApiTags('users')
-@Controller(`${apiVersion}/user`)
+@Controller('api/v2/user')
 export class UserController {
   constructor(private readonly clientProxy: ClientProxySuperFlights) {}
   private _clientProxyUser = this.clientProxy.clientProxyUsers();
 
   @Post()
-  create(@Body() user: UserDto): Observable<IUser> {
-    return this._clientProxyUser.send(UserMSG.CREATE, user);
+  create(@Body() userDTO: UserDto): Observable<IUser> {
+    return this._clientProxyUser.send(UserMSG.CREATE, userDTO);
   }
 
   @Get()
@@ -34,20 +32,17 @@ export class UserController {
   }
 
   @Get(':id')
-  // findOne(id: string): Observable<IUser> {
-  findOne(@Param() { id }): Observable<IUser> {
+  findOne(@Param('id') id: string): Observable<IUser> {
     return this._clientProxyUser.send(UserMSG.FIND_ONE, id);
   }
 
   @Put(':id')
-  // update(@Body() user: UserDto, id: string): Observable<IUser> {
-  update(@Param() { id }, @Body() user: UserDto): Observable<IUser> {
-    return this._clientProxyUser.send(UserMSG.UPDATE, { id, user });
+  update(@Param('id') id: string, @Body() userDTO: UserDto): Observable<IUser> {
+    return this._clientProxyUser.send(UserMSG.UPDATE, { id, userDTO });
   }
 
   @Delete(':id')
-  // delete(id: string): Observable<IUser> {
-  delete(@Param() { id }): Observable<IUser> {
+  delete(@Param('id') id: string): Observable<any> {
     return this._clientProxyUser.send(UserMSG.DELETE, id);
   }
 }
