@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { FlightMSG } from 'src/common/constants';
 import { ClientProxySuperFlights } from 'src/common/proxy/client-proxy';
@@ -15,8 +16,10 @@ import { FlightDTO } from './dto/flight.dto';
 import { Observable } from 'rxjs';
 import { IFlight } from 'src/common/interfaces/flight.interface';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 @ApiTags('flights')
-@Controller('flight')
+@UseGuards(JwtAuthGuard)
+@Controller('api/v1/flights')
 export class FlightController {
   constructor(
     private readonly clientProxySuperFlights: ClientProxySuperFlights,

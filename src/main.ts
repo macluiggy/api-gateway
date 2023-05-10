@@ -13,7 +13,7 @@ async function bootstrap() {
     .setDescription('Scheduled Flights API')
     .setVersion('2.0.0')
     .addTag('flight')
-    // .addBearerAuth()
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api/docs', app, document, {
